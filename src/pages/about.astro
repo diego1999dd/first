@@ -1,33 +1,89 @@
 ---
+const pageTitle = "Sobre Mim";
 
+const identify = {
+  firstName: "Diego",
+  country: "Brasil",
+  occupation: "Desenvolvedor Front-End",
+  hobbies: ["jogar", "futebol", "séries e filmes de comédia"],
+};
+
+const skills = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "React.js",
+  "Nest.js",
+  "Node.js",
+  "Astro",
+  "Escrever Documentação",
+];
+
+const happy = true;
+const finished = false;
+const goal = 3;
 ---
 
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sobre</title>
+    <title>{pageTitle}</title>
   </head>
   <body>
     <a href="/">Início</a>
     <a href="/about/">Sobre</a>
     <a href="/blog/">Blog</a>
 
-    <h1>Sobre Mim</h1>
+    <h1>{pageTitle}</h1>
     <h2>... e meu novo site Astro!</h2>
-    <main>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero error
-      veritatis a tempore, corrupti debitis laudantium nam. Molestiae optio,
-      inventore et eum quae, nihil enim odit quasi ad eveniet vero?
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </main>
+
+    <p>
+      Estou resolvendo o tutorial introdutório do Astro. Esta é a segunda página
+      no meu website, e é a primeira que eu mesmo construí!
+    </p>
+
+    <p>
+      Este site será atualizado enquanto eu completo mais desse tutorial, então
+      continue verificando e veja como minha jornada está indo!
+    </p>
+
+    <p>Aqui estão alguns fatos sobre mim:</p>
+    <ul>
+      <li>Meu nome é {identify.firstName}</li>
+      <li>
+        Moro no {identify.country} e meu cargo no trabalho é de {
+          identify.occupation
+        }
+      </li>
+      {
+        identify.hobbies.length >= 2 && (
+          <li>
+            Meus hobbies são: {identify.hobbies[0]}, {identify.hobbies[1]},{" "}
+            {identify.hobbies[2]}.
+          </li>
+        )
+      }
+    </ul>
+    <p>Minhas habilidades são:</p>
+    <ul>
+      {skills.map((habilidade) => <li>{habilidade}</li>)}
+    </ul>
+
+    {happy && <p>Estou feliz em estar aprendendo Astro!</p>}
+
+    {finished && <p>Eu terminei esse tutorial!</p>}
+
+    {
+      goal === 3 ? (
+        <p>Minha meta é terminar em 3 dias.</p>
+      ) : (
+        <p>Minha meta não é em 3 dias.</p>
+      )
+    }
   </body>
 </html>
