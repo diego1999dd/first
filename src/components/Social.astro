@@ -1,0 +1,29 @@
+---
+const { platform, username } = Astro.props;
+
+// Mapeia as plataformas para seus domínios/URLs personalizados
+const platformUrls: Record<string, string> = {
+  github: `https://www.github.com/${username}`,
+  linkedin: `https://www.linkedin.com/in/${username}`,
+  x: `https://www.x.com/${username}`, // Twitter/X
+  instagram: `https://www.instagram.com/${username}`,
+  facebook: `https://www.facebook.com/${username}`,
+  youtube: `https://www.youtube.com/${username}`,
+};
+
+// URL final baseada na plataforma
+const profileUrl = platformUrls[platform.toLowerCase()] ?? '#';
+---
+<a href={profileUrl} target="_blank" rel="noopener noreferrer">
+  {platform}
+</a>
+
+<style>
+  a {
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: #4c1d95;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+</style>
