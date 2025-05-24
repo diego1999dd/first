@@ -1,4 +1,5 @@
 ---
+import "../styles/global.css";
 const pageTitle = "Sobre Mim";
 
 const identify = {
@@ -22,6 +23,15 @@ const skills = [
 const happy = true;
 const finished = false;
 const goal = 3;
+
+const sistemaOperacional = "Windows";
+const quantidade = 2;
+const calcado = "Tênis";
+const estudante = false;
+
+const skillColor = "navy";
+const fontWeight = "bold";
+const textCase = "uppercase";
 ---
 
 <!doctype html>
@@ -33,6 +43,16 @@ const goal = 3;
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
+    <style>
+      h1 {
+        color: purple;
+      }
+      .skill {
+        color: var(--skillColor);
+        font-weight: var(--fontWeight);
+        text-transform: var(--textCase);
+      }
+    </style>
   </head>
   <body>
     <a href="/">Início</a>
@@ -71,7 +91,7 @@ const goal = 3;
     </ul>
     <p>Minhas habilidades são:</p>
     <ul>
-      {skills.map((habilidade) => <li>{habilidade}</li>)}
+      {skills.map((habilidade) => <li class="skill">{habilidade}</li>)}
     </ul>
 
     {happy && <p>Estou feliz em estar aprendendo Astro!</p>}
@@ -84,6 +104,20 @@ const goal = 3;
       ) : (
         <p>Minha meta não é em 3 dias.</p>
       )
+    }
+
+    <p>O sistema operacional que mais uso é o {sistemaOperacional}</p>
+    {estudante && <p>Ainda estou na escola.</p>}
+    <p>Eu tenho {quantidade + 1} pares de {calcado}</p>
+
+    {
+      /* {
+      sistemaOperacional === "MacOS" ? (
+        <p>Estou utilizando um Mac.</p>
+      ) : (
+        <p>Não estou utilizando um Mac.</p>
+      )
+    }*/
     }
   </body>
 </html>
