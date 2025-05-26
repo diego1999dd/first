@@ -1,0 +1,10 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter } = Astro.props;
+---
+<BaseLayout pageTitle={frontmatter.title}>
+    <p>Publicado em: {frontmatter.pubDate.toString().slice(0,10)}</p> {/* Serve para pegar a pugDate e mostrar aqui onvertendo essa data para string com .toString() → vira algo como "2024-05-24T12:34:56.789Z". */}
+    <p>Escrito por {frontmatter.author}</p>
+    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />{/* Basicamente ele vai lá nos MD de cada post e pega dentro de frontMatter ---, a image e dentro da image a url, com a alt acontece a mesma coisa. */}
+    <slot />
+</BaseLayout>

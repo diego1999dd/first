@@ -1,15 +1,23 @@
 ---
+import BlogPost from "../components/BlogPost.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
+const allPosts = await Astro.glob('./posts/*.md');
 const pageTitle = "Meu Blog de Aprendizado sobre Astro";
 ---
    
 <BaseLayout>
     <h1>{pageTitle}</h1>
     <p>Aqui é onde postarei sobre minha jornada aprendendo Astro.</p>
-    <ul>
-      <li><a href="/posts/post-1/">Postagem 1</a></li>
+     <ul>
+    {/*   <li><a href="/posts/post-1/">Postagem 1</a></li>
       <li><a href="/posts/post-2/">Postagem 2</a></li>
       <li><a href="/posts/post-3/">Postagem 3</a></li>
+    
+      Aqui eu tirei tudo e resumi no código abaixo, 
+      
+    */}
+
+    {/* Navega por todos os post dentro da pasta, posts, Cria uma lista com um link para cada post usando a url gerada pelo Astro */}   
+      {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
     </ul>
 </BaseLayout>    
