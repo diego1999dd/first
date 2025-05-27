@@ -1,56 +1,27 @@
 ---
-import type { MarkdownInstance } from 'astro'; // Importa o tipo usado para arquivos Markdown
-import BaseLayout from '../../layouts/BaseLayout.astro'; // Layout base da página
-import BlogPost from '../../components/BlogPost.astro'; // Componente para exibir um post individual
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPost from '../../components/BlogPost.astro';
 
-// Função responsável por gerar páginas estáticas para cada tag
 export async function getStaticPaths() {
-    // Define a estrutura esperada no frontmatter dos arquivos Markdown
-    type Frontmatter = {
-        title: string;       // título do post
-        tags?: string[];     // tags (opcional)
+  const allPosts = await Astro.glob('../posts/*.md');
+
+  const uniqueTags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
     };
-
-    // Define o tipo do post com base nos arquivos Markdown
-    type Post = MarkdownInstance<Frontmatter>;
-
-    // Busca todos os arquivos Markdown na pasta `posts`
-    const allPosts: Post[] = await Astro.glob('../posts/*.md');
-
-    // Extrai todas as tags dos posts e remove duplicatas
-    const uniqueTags = [...new Set(
-        allPosts.flatMap((post) => post.frontmatter.tags ?? []) // usa [] caso tags seja undefined
-    )];
-
-    // Cria uma página para cada tag encontrada
-    return uniqueTags.map((tag) => {
-        // Filtra os posts que contêm a tag atual
-        const filteredPosts = allPosts.filter(
-            (post) => post.frontmatter.tags?.includes(tag) // só chama includes se tags existir
-        );
-
-        // Retorna os parâmetros e as props necessárias para cada página de tag
-        return {
-            params: { tag },            // usado na URL da rota (ex: /tags/javascript)
-            props: { posts: filteredPosts }, // passado como props para o componente da página
-        };
-    });
+  });
 }
 
-// Obtém a tag atual da URL e os posts filtrados para essa tag
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
-
-<!-- Layout da página, passando o título da tag como título da página -->
 <BaseLayout pageTitle={tag}>
-  <!-- Texto introdutório -->
   <p>Postagens com a tag {tag}</p>
-
-  <!-- Lista os posts relacionados à tag -->
   <ul>
-    {posts.map((post) => (
-      <BlogPost url={post.url} title={post.frontmatter.title} />
-    ))}
+    {posts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title}/>)}
   </ul>
 </BaseLayout>

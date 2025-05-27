@@ -6,5 +6,29 @@ const { frontmatter } = Astro.props;
     <p>Publicado em: {frontmatter.pubDate.toString().slice(0,10)}</p> {/* Serve para pegar a pugDate e mostrar aqui onvertendo essa data para string com .toString() → vira algo como "2024-05-24T12:34:56.789Z". */}
     <p>Escrito por {frontmatter.author}</p>
     <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />{/* Basicamente ele vai lá nos MD de cada post e pega dentro de frontMatter ---, a image e dentro da image a url, com a alt acontece a mesma coisa. */}
+    <div class="tags">
+        {frontmatter.tags.map((tag) => (
+        <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+        ))}
+    </div>
     <slot />
 </BaseLayout>
+<style>
+  a {
+    color: #00539F;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: .5em;
+    padding: .5em 1em;
+    font-size: 1.15em;
+    background-color: #F8FCFD;
+  }
+</style>
