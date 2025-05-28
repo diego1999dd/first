@@ -1,0 +1,17 @@
+---
+import { services } from "../data/services";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { toSlug } from "../utils/toSlug";
+
+---
+
+<BaseLayout>
+    <h1>Todos os Serviços que oferecemos:</h1>
+    <ul>
+      {services.map(service => (
+        <li>
+          <a href={`/servicos/${toSlug(service)}`}>{service}</a>
+        </li>
+      ))}
+    </ul>
+</BaseLayout>

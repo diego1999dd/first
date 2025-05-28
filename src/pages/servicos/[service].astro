@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { toSlug } from '../../utils/toSlug.ts';
+import {services} from '../../data/services.ts'
+import {locations} from '../../data/locations.ts'
+
+export async function getStaticPaths() {
+ return services.map((service) => ({
+    params: { service: toSlug(service) },
+    props: { service }
+  }));
+}
+
+const { props } = Astro;
+const { service } = props;
+const slugifiedService = toSlug(service);
+---
+
+<BaseLayout>  
+    <h1>{service}</h1>
+    <p>
+      Oferecemos o serviço de {service} em várias cidades. Escolha a sua:
+    </p>
+    <ul>
+      {locations.map(location => (
+        <li>
+          <a href={`/servicos/${slugifiedService}/${toSlug(location)}`}>
+            {location}
+          </a>
+        </li>
+      ))}
+    </ul>
+</BaseLayout>

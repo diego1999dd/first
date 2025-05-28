@@ -1,0 +1,30 @@
+---
+import { locations } from '../../../data/locations';
+import { services } from '../../../data/services';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { toSlug } from '../../../utils/toSlug';
+
+
+export async function getStaticPaths() {
+  return services.flatMap((service) =>
+    locations.map((location) => ({
+      params: { service: toSlug(service), location: toSlug(location) },
+      props: { service, location }
+    }))
+  );
+}
+
+const { props } = Astro;
+const { service, location } = props;
+---
+<BaseLayout>
+    <h1>{service} em {location}</h1>
+    <p>
+      Oferecemos o serviço de {service} na cidade de {location} com total qualidade e confiança.
+    </p>
+    <ul>
+      <li><a href={`/servicos/${service.toLowerCase().replace(/\s+/g, '-').replace(/[àáâãäå]/g, 'a').replace(/ç/g, 'c').replace(/[èéêë]/g, 'e').replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o').replace(/[ùúûü]/g, 'u').replace(/[ýÿ]/g, 'y').replace(/ñ/g, 'n')}/atibaia`}>Atibaia</a></li>
+      <li><a href={`/servicos/${service.toLowerCase().replace(/\s+/g, '-').replace(/[àáâãäå]/g, 'a').replace(/ç/g, 'c').replace(/[èéêë]/g, 'e').replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o').replace(/[ùúûü]/g, 'u').replace(/[ýÿ]/g, 'y').replace(/ñ/g, 'n')}/braganca-paulista`}>Bragança Paulista</a></li>
+      <li><a href={`/servicos/${service.toLowerCase().replace(/\s+/g, '-').replace(/[àáâãäå]/g, 'a').replace(/ç/g, 'c').replace(/[èéêë]/g, 'e').replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o').replace(/[ùúûü]/g, 'u').replace(/[ýÿ]/g, 'y').replace(/ñ/g, 'n')}/vargem`}>Vargem</a></li>
+    </ul>
+</BaseLayout>
